@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>canvas-practice</title>
+  <meta charset="utf-8">
+</head>
+
+<body>
+	<script src=fabric.js></script>
+	<canvas id="c" width="400" height="400" style="border:1px solid #000000"></canvas>
+	<script>
+
+
+	
+		var canvas = new fabric.Canvas("c");
+
+		var rect = new fabric.Rect({
+			left: 100,
+			top: 100,
+			fill: 'red',
+			width: 20,
+			height: 20
+		});
+
+		canvas.add(rect);
+	
+	</script>
+</body>
+</html>
