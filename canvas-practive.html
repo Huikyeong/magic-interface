@@ -4,35 +4,65 @@
   <title>canvas-practice</title>
   <meta charset="utf-8">
 	<style>
+		html,body{height: 100%; margin: 0px;}
+
+		.page{
+			display: flex;
+			width: 100%;
+			height: 100%;
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			background: pink;
+
+		}
+
 		.wrapper{
 			width:100%;
-			height:750px;
+			height:100%;
 			display:flex;
 			align-items: flex-end;
 			justify-content: center;
 		}
+		
+		.canvas{
+			margin-bottom: 30px;
+			background: white;
+		}
 
 		.buttons{
 			display:flex;
-			align-items: center;
-			justify-content: space-between;
+			justify-content: center;
+		}
+
+		input[type=button] { 
+			margin-left: 10px;
+			margin-top: 20px;
+			font-size:16pt;
+			border: 2px solid gray;
+			border-radius: 3px;
 		}
 	</style>
 </head>
 
 <body>
 	<script src=fabric.js></script>
-
+	<div class="page">
 	<div class="buttons">
-		<input type="button" id="rectangle" value="rectangle" style="font-size:16pt;" onclick="make_rect();"></input>
-		<input type="button" id="triangle" value="triangle" style="font-size:16pt;" onclick="make_tri();"></input>
-		<input type="button" id="circle" value="circle" style="font-size:16pt;" onclick="make_cir();"></input>
-		<input type="button" id="line" value="line" style="font-size:16pt;" onclick="make_line();"></input>
-		<input type="button" id="textbox" value="textbox" style="font-size:16pt;" onclick="make_text();"></input>
+		<input type="button" id="rectangle" value="rectangle" onclick="make_rect();"></input>
+		<input type="button" id="triangle" value="triangle" onclick="make_tri();"></input>
+		<input type="button" id="circle" value="circle" onclick="make_cir();"></input>
+		<input type="button" id="line" value="line" onclick="make_line();"></input>
+		<input type="button" id="polygon" value="polygon" onclick="make_poly();"></input>
+		<input type="button" id="textbox" value="textbox" onclick="make_text();"></input>
+		<input type="button" id="reset" value="reset" onclick="reset();" style="background: red; color: white;"></input>
 	</div>
 
 	<div class="wrapper">
+	<div class="canvas">
 		<canvas id="c" width="1200" height="600" style="border:3px solid #8C8C8C; display:block;"></canvas>
+	</div>
+	</div>
 	</div>
 
 	<script>
@@ -45,7 +75,7 @@
 				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
 				width: 150,
 				height: 150,
-				opacity: 0.5
+				opacity: 0.7
 			});
 			canvas.add(rect);
 		}
@@ -57,7 +87,7 @@
 				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
 				width: 100,
 				height: 100,
-				opacity: 0.5
+				opacity: 0.7
 			});
 			canvas.add(tri);
 		}
@@ -68,7 +98,7 @@
 				left: (canvas.width - 120) * Math.random(),
 				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
 				radius: 60,
-				opacity: 0.5
+				opacity: 0.7
 			});
 			canvas.add(cir);
 		}
@@ -79,9 +109,23 @@
 			var line = new fabric.Line([lineX, lineY, lineX + 150, lineY + 150],{
 				stroke: "#" + Math.round(Math.random() * 0xffffff).toString(16),
 				strokeWidth: 5,
-				opacity: 0.5
+				opacity: 0.7
 			});
 			canvas.add(line);
+		}
+
+		function make_poly(){
+			var poly = new fabric.Polygon([
+				{x: 185, y: 0},
+				{x: 250, y: 100},
+				{x: 385, y: 170},
+				{x: 0, y: 245}], {
+				top: (canvas.height - 300) * Math.random(),
+				left: (canvas.width - 300) * Math.random(),
+				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
+				opacity: 0.7
+			});
+			canvas.add(poly);
 		}
 
 		function make_text(){
@@ -95,6 +139,10 @@
 				textAlign: 'left'
 			});
 			canvas.add(text);
+		}
+
+		function reset(){
+			canvas.clear();
 		}
 
 	</script>
