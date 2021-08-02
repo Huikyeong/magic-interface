@@ -58,9 +58,23 @@
 		<input type="button" id="reset" value="reset" onclick="reset();" style="background: red; color: white;"></input>
 	</div>
 
+	<div class="colors">
+		<input type="button" id="black" value="  " onclick="set_color(this);" style="background: black;"></input>
+		<input type="button" id="red" value="  " onclick="set_color(this);" style="background: red;"></input>
+		<input type="button" id="orange" value="  " onclick="set_color(this);" style="background: orange;"></input>
+		<input type="button" id="yellow" value="  " onclick="set_color(this);" style="background: yellow;"></input>
+		<input type="button" id="greenyellow" value="  " onclick="set_color(this);" style="background: greenyellow;"></input>
+		<input type="button" id="green" value="  " onclick="set_color(this);" style="background: green;"></input>
+		<input type="button" id="skyblue" value="  " onclick="set_color(this);" style="background: skyblue;"></input>
+		<input type="button" id="blue" value="  " onclick="set_color(this);" style="background: blue;"></input>
+		<input type="button" id="navy" value="  " onclick="set_color(this);" style="background: navy;"></input>
+		<input type="button" id="purple" value="  " onclick="set_color(this);" style="background: purple;"></input>
+		<input type="button" id="deeppink" value="  " onclick="set_color(this);" style="background: deeppink;"></input>
+	</div>
+
 	<div class="wrapper">
 	<div class="canvas">
-		<canvas id="c" width="1200" height="600" style="border:3px solid #8C8C8C; display:block;"></canvas>
+		<canvas id="c" width="1200" height="650" style="box-sizing: border-box; border:3px solid #8C8C8C; display:block;"></canvas>
 	</div>
 	</div>
 	</div>
@@ -75,7 +89,7 @@
 				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
 				width: 150,
 				height: 150,
-				opacity: 0.7
+				opacity: 0.8
 			});
 			canvas.add(rect);
 		}
@@ -87,7 +101,7 @@
 				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
 				width: 100,
 				height: 100,
-				opacity: 0.7
+				opacity: 0.8
 			});
 			canvas.add(tri);
 		}
@@ -98,7 +112,7 @@
 				left: (canvas.width - 120) * Math.random(),
 				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
 				radius: 60,
-				opacity: 0.7
+				opacity: 0.8
 			});
 			canvas.add(cir);
 		}
@@ -109,7 +123,7 @@
 			var line = new fabric.Line([lineX, lineY, lineX + 150, lineY + 150],{
 				stroke: "#" + Math.round(Math.random() * 0xffffff).toString(16),
 				strokeWidth: 5,
-				opacity: 0.7
+				opacity: 0.8
 			});
 			canvas.add(line);
 		}
@@ -123,7 +137,7 @@
 				top: (canvas.height - 300) * Math.random(),
 				left: (canvas.width - 300) * Math.random(),
 				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
-				opacity: 0.7
+				opacity: 0.8
 			});
 			canvas.add(poly);
 		}
@@ -134,7 +148,7 @@
 				top: (canvas.height - 300) * Math.random(),
 				left: (canvas.width - 300) * Math.random(),
 				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
-				opacity: 0.7,
+				opacity: 0.8,
 				fontSize: 20,
 				textAlign: 'left'
 			});
@@ -145,6 +159,11 @@
 			canvas.clear();
 		}
 
+		function set_color(button){
+			canvas.getActiveObject().set("fill", button.style.background);
+			canvas.getActiveObject().set("stroke", button.style.background);
+			canvas.renderAll();
+		}
 	</script>
 </body>
 </html>
