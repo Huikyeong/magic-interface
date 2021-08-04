@@ -13,7 +13,7 @@
 			align-items: center;
 			justify-content: center;
 			flex-direction: column;
-			background: pink;
+			background: lightgray;
 
 		}
 
@@ -54,8 +54,9 @@
 		<input type="button" id="circle" value="circle" onclick="make_cir();"></input>
 		<input type="button" id="line" value="line" onclick="make_line();"></input>
 		<input type="button" id="polygon" value="polygon" onclick="make_poly();"></input>
-		<input type="button" id="textbox" value="textbox" onclick="make_text();"></input>
-		<input type="button" id="reset" value="reset" onclick="reset();" style="background: red; color: white;"></input>
+		<input type="button" id="reset" value="reset" onclick="reset();" style="background: gray; color: white;"></input>
+		<input type="button" id="start" value="start" onclick="start(this);" style="background: red; color: white;"></input>
+		<input type="button" id="stop" value="stop" onclick="stop(this);" style="background: gray; color: white; visibility: hidden;"></input>
 	</div>
 
 	<div class="colors">
@@ -80,68 +81,87 @@
 	</div>
 
 	<script>
+		var colors = new Array("black", "red", "orange", "yellow", "greenyellow", "green", "skyblue", "blue", "navy", "purple", "deeppink");
 		var canvas = new fabric.Canvas("c");
+		var sw = 0;
+		var target_color;
 
 		function make_rect(){
 			var rect = new fabric.Rect({
-				top: (canvas.height - 150) * Math.random(),
-				left: (canvas.width - 150) * Math.random(),
-				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
+				top: (canvas.height - 150) / 2,
+				left: (canvas.width - 150) / 2,
+				fill: colors[Math.floor(Math.random() * colors.length)],
 				width: 150,
 				height: 150,
-				opacity: 0.8
+				opacity: 0.7
 			});
+			if (sw && rect.fill == target_color){
+				make_rect();
+				return;
+			}
 			canvas.add(rect);
 		}
 
 		function make_tri(){
 			var tri = new fabric.Triangle({
-				top: (canvas.height - 150) * Math.random(),
-				left: (canvas.width - 150) * Math.random(),
-				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
+				top: (canvas.height - 100) / 2,
+				left: (canvas.width - 100) / 2,
+				fill: colors[Math.floor(Math.random() * colors.length)],
 				width: 100,
 				height: 100,
-				opacity: 0.8
+				opacity: 0.7
 			});
+			if (sw && tri.fill == target_color){
+				make_tri();
+				return;
+			}
 			canvas.add(tri);
 		}
 
 		function make_cir(){
 			var cir = new fabric.Circle({
-				top: (canvas.height - 120) * Math.random(),
-				left: (canvas.width - 120) * Math.random(),
-				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
+				top: (canvas.height - 120) / 2,
+				left: (canvas.width - 120) / 2,
+				fill: colors[Math.floor(Math.random() * colors.length)],
 				radius: 60,
-				opacity: 0.8
+				opacity: 0.7
 			});
+			if (sw && cir.fill == target_color){
+				make_cir();
+				return;
+			}
 			canvas.add(cir);
 		}
 
 		function make_line(){
-			lineX = (canvas.width - 150) * Math.random();
-			lineY = (canvas.height - 150) * Math.random();
+			lineX = (canvas.width - 150) / 2;
+			lineY = (canvas.height - 150) / 2;
 			var line = new fabric.Line([lineX, lineY, lineX + 150, lineY + 150],{
-				stroke: "#" + Math.round(Math.random() * 0xffffff).toString(16),
+				stroke: colors[Math.floor(Math.random() * colors.length)],
 				strokeWidth: 5,
-				opacity: 0.8
+				opacity: 0.7
 			});
 			canvas.add(line);
 		}
 
 		function make_poly(){
 			var poly = new fabric.Polygon([
-				{x: 185, y: 0},
-				{x: 250, y: 100},
-				{x: 385, y: 170},
-				{x: 0, y: 245}], {
-				top: (canvas.height - 300) * Math.random(),
-				left: (canvas.width - 300) * Math.random(),
-				fill: "#" + Math.round(Math.random() * 0xffffff).toString(16),
-				opacity: 0.8
+				{x: 120, y: 0},
+				{x: 160, y: 60},
+				{x: 240, y: 110},
+				{x: 0, y: 160}], {
+				top: (canvas.height - 300) / 2,
+				left: (canvas.width - 300) / 2,
+				fill: colors[Math.floor(Math.random() * colors.length)],
+				opacity: 0.7
 			});
+			if (sw && poly.fill == target_color){
+				make_poly();
+				return;
+			}
 			canvas.add(poly);
 		}
-
+/*
 		function make_text(){
 			var text = new fabric.Textbox("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ligula sapien, rutrum sed vestibulum eget, rhoncus ac erat. Aliquam erat volutpat. Sed convallis scelerisque enim at fermentum.", {
 				width: 300,
@@ -154,9 +174,119 @@
 			});
 			canvas.add(text);
 		}
-
+*/
 		function reset(){
 			canvas.clear();
+		}
+/*
+		function delete_object(){
+			canvas.getActiveObject().remove();
+		}
+*/
+		function random_top(height){
+			if (Math.floor(Math.random() * 2)){
+				return 20;
+			}else{
+				return canvas.height - height - 20;
+			}
+		}
+
+		function random_left(width){
+			if (Math.floor(Math.random() * 2)){
+				return 20;
+			}else{
+				return canvas.width - width - 20;
+			}
+		}
+
+		function make_rect2(){
+			var resize = Math.pow(2, Math.floor(Math.random() * 2) * 2 - 1);
+			var rect = new fabric.Rect({
+				top: random_top(150 * resize),
+				left: random_left(150 * resize),
+				fill: target_color,
+				width: 150 * resize,
+				height: 150 * resize,
+				opacity: 0.7,
+				selectable: false
+			});
+			canvas.add(rect);
+		}
+
+		function make_tri2(){
+			var resize = Math.pow(2, Math.floor(Math.random() * 2) * 2 - 1);
+			var tri = new fabric.Triangle({
+				top: random_top(100 * resize),
+				left: random_left(100 * resize),
+				fill: target_color,
+				width: 100 * resize,
+				height: 100 * resize,
+				opacity: 0.7,
+				selectable: false
+			});
+			canvas.add(tri);
+		}
+
+		function make_cir2(){
+			var resize = Math.pow(2, Math.floor(Math.random() * 2) * 2 - 1);
+			var cir = new fabric.Circle({
+				top: random_top(120 * resize),
+				left: random_left(120 * resize),
+				fill: target_color,
+				radius: 60 * resize,
+				opacity: 0.7,
+				selectable: false
+			});
+			canvas.add(cir);
+		}
+
+		function make_poly2(){
+			var resize = Math.pow(2, Math.floor(Math.random() * 2) * 2 - 1);
+			var poly = new fabric.Polygon([
+				{x: 120 * resize, y: 0},
+				{x: 160 * resize, y: 60 * resize},
+				{x: 240 * resize, y: 110 * resize},
+				{x: 0, y: 160 * resize}], {
+				top: random_top(160 * resize),
+				left: random_left(240 * resize),
+				fill: target_color,
+				opacity: 0.7,
+				selectable: false
+			});
+			canvas.add(poly);
+		}
+
+		function start(button){
+			reset();
+			sw = 1;
+			target_color = colors[Math.floor(Math.random() * colors.length)];
+			if (button.value != "next"){
+				button.value = "next";
+				document.getElementById('stop').style.visibility = 'visible';
+			}
+			switch (Math.floor(Math.random() * 4)){
+				case 0:
+					make_rect2();
+					break;
+				case 1:
+					make_tri2();
+					break;
+				case 2:
+					make_cir2();
+					break;
+				case 3:
+					make_poly2();
+					break;
+			}
+			console.log(Date.now());
+		}
+		
+		function stop(button){
+			button.style.visibility = "hidden";
+			document.getElementById('start').value = "start";
+			console.log(Date.now());
+			reset();
+			sw = 0;
 		}
 
 		function set_color(button){
