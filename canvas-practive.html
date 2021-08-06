@@ -33,6 +33,7 @@
 		.buttons{
 			display:flex;
 			justify-content: center;
+			height: 55px;
 		}
 
 		input[type=button] { 
@@ -57,6 +58,7 @@
 		<input type="button" id="reset" value="reset" onclick="reset();" style="background: gray; color: white;"></input>
 		<input type="button" id="start" value="start" onclick="start(this);" style="background: red; color: white;"></input>
 		<input type="button" id="stop" value="stop" onclick="stop(this);" style="background: gray; color: white; visibility: hidden;"></input>
+		<h2 id="count" style="visibility: hidden; margin-left: 50px;">0번째</h2>
 	</div>
 
 	<div class="colors">
@@ -85,6 +87,8 @@
 		var canvas = new fabric.Canvas("c");
 		var sw = 0;
 		var target_color;
+		var cnt = 0;
+		var test_cnt = 1;
 
 		function make_rect(){
 			var rect = new fabric.Rect({
@@ -93,7 +97,7 @@
 				fill: colors[Math.floor(Math.random() * colors.length)],
 				width: 150,
 				height: 150,
-				opacity: 0.7
+				opacity: 0.5
 			});
 			if (sw && rect.fill == target_color){
 				make_rect();
@@ -109,7 +113,7 @@
 				fill: colors[Math.floor(Math.random() * colors.length)],
 				width: 100,
 				height: 100,
-				opacity: 0.7
+				opacity: 0.5
 			});
 			if (sw && tri.fill == target_color){
 				make_tri();
@@ -124,7 +128,7 @@
 				left: (canvas.width - 120) / 2,
 				fill: colors[Math.floor(Math.random() * colors.length)],
 				radius: 60,
-				opacity: 0.7
+				opacity: 0.5
 			});
 			if (sw && cir.fill == target_color){
 				make_cir();
@@ -139,7 +143,7 @@
 			var line = new fabric.Line([lineX, lineY, lineX + 150, lineY + 150],{
 				stroke: colors[Math.floor(Math.random() * colors.length)],
 				strokeWidth: 5,
-				opacity: 0.7
+				opacity: 0.5
 			});
 			canvas.add(line);
 		}
@@ -153,7 +157,7 @@
 				top: (canvas.height - 300) / 2,
 				left: (canvas.width - 300) / 2,
 				fill: colors[Math.floor(Math.random() * colors.length)],
-				opacity: 0.7
+				opacity: 0.5
 			});
 			if (sw && poly.fill == target_color){
 				make_poly();
@@ -207,7 +211,7 @@
 				fill: target_color,
 				width: 150 * resize,
 				height: 150 * resize,
-				opacity: 0.7,
+				opacity: 0.5,
 				selectable: false
 			});
 			canvas.add(rect);
@@ -221,7 +225,7 @@
 				fill: target_color,
 				width: 100 * resize,
 				height: 100 * resize,
-				opacity: 0.7,
+				opacity: 0.5,
 				selectable: false
 			});
 			canvas.add(tri);
@@ -234,7 +238,7 @@
 				left: random_left(120 * resize),
 				fill: target_color,
 				radius: 60 * resize,
-				opacity: 0.7,
+				opacity: 0.5,
 				selectable: false
 			});
 			canvas.add(cir);
@@ -250,7 +254,7 @@
 				top: random_top(160 * resize),
 				left: random_left(240 * resize),
 				fill: target_color,
-				opacity: 0.7,
+				opacity: 0.5,
 				selectable: false
 			});
 			canvas.add(poly);
@@ -260,9 +264,11 @@
 			reset();
 			sw = 1;
 			target_color = colors[Math.floor(Math.random() * colors.length)];
+			
 			if (button.value != "next"){
 				button.value = "next";
 				document.getElementById('stop').style.visibility = 'visible';
+				document.getElementById('count').style.visibility = 'visible';
 			}
 			switch (Math.floor(Math.random() * 4)){
 				case 0:
@@ -279,12 +285,20 @@
 					break;
 			}
 			console.log(Date.now());
+			localStorage.setItem(test_cnt.toString() + '-' + cnt.toString(), JSON.stringify(Date.now()));
+			cnt++;
+			document.getElementById('count').innerText = cnt.toString() + "번째";
 		}
 		
 		function stop(button){
 			button.style.visibility = "hidden";
 			document.getElementById('start').value = "start";
 			console.log(Date.now());
+			localStorage.setItem('stop', JSON.stringify(Date.now()));
+			document.getElementById('count').style.visibility = 'hidden';
+			document.getElementById('count').innerText = '0';
+			cnt = 0;
+			test_cnt++;
 			reset();
 			sw = 0;
 		}
