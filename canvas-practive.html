@@ -65,14 +65,22 @@
 		<input type="button" id="black" value="  " onclick="set_color(this);" style="background: black;"></input>
 		<input type="button" id="red" value="  " onclick="set_color(this);" style="background: red;"></input>
 		<input type="button" id="orange" value="  " onclick="set_color(this);" style="background: orange;"></input>
+		<!--
 		<input type="button" id="yellow" value="  " onclick="set_color(this);" style="background: yellow;"></input>
+		-->
 		<input type="button" id="greenyellow" value="  " onclick="set_color(this);" style="background: greenyellow;"></input>
+		<!--
 		<input type="button" id="green" value="  " onclick="set_color(this);" style="background: green;"></input>
+		-->
 		<input type="button" id="skyblue" value="  " onclick="set_color(this);" style="background: skyblue;"></input>
+		<!--
 		<input type="button" id="blue" value="  " onclick="set_color(this);" style="background: blue;"></input>
+		-->
 		<input type="button" id="navy" value="  " onclick="set_color(this);" style="background: navy;"></input>
+		<!--
 		<input type="button" id="purple" value="  " onclick="set_color(this);" style="background: purple;"></input>
 		<input type="button" id="deeppink" value="  " onclick="set_color(this);" style="background: deeppink;"></input>
+		-->
 	</div>
 
 	<div class="wrapper">
@@ -83,7 +91,7 @@
 	</div>
 
 	<script>
-		var colors = new Array("black", "red", "orange", "yellow", "greenyellow", "green", "skyblue", "blue", "navy", "purple", "deeppink");
+		var colors = new Array("black", "red", "orange", "greenyellow", "skyblue", "navy");
 		var canvas = new fabric.Canvas("c");
 		var sw = 0;
 		var target_color;
@@ -294,7 +302,7 @@
 			button.style.visibility = "hidden";
 			document.getElementById('start').value = "start";
 			console.log(Date.now());
-			localStorage.setItem('stop', JSON.stringify(Date.now()));
+			localStorage.setItem(test_cnt.toString() + '-stop', JSON.stringify(Date.now()));
 			document.getElementById('count').style.visibility = 'hidden';
 			document.getElementById('count').innerText = '0';
 			cnt = 0;
