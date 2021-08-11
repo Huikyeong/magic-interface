@@ -32,16 +32,23 @@
 		.buttons{
 			display: flex;
 			justify-content: center;
-			height: 60px;
+			height: 120px;
+		}
+
+		.buttons input{
+			margin-top: 80px;
+			height: 35px;
+		}
+
+		.colors input{
+			margin-top: 20px;
 		}
 
 		input[type=button] { 
 			margin-left: 10px;
-			margin-top: 80px;
 			font-size:16pt;
 			border: 2px solid gray;
 			border-radius: 3px;
-			height: 35px;
 		}
 	</style>
 </head>
@@ -97,6 +104,7 @@
 		var target_color;
 		var cnt = 0;
 		var test_cnt = 1;
+		var bt_cnt = 1;
 
 		function make_rect(){
 			var rect = new fabric.Rect({
@@ -107,9 +115,13 @@
 				height: 150,
 				opacity: 0.5
 			});
-			if (sw && rect.fill == target_color){
-				make_rect();
-				return;
+			if (sw){
+				if (rect.fill == target_color){
+					make_rect();
+					return;
+				}
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(make_rect)', JSON.stringify(Date.now()));
+				bt_cnt++;
 			}
 			canvas.add(rect);
 		}
@@ -123,9 +135,13 @@
 				height: 100,
 				opacity: 0.5
 			});
-			if (sw && tri.fill == target_color){
-				make_tri();
-				return;
+			if (sw){
+				if (tri.fill == target_color){
+					make_tri();
+					return;
+				}
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(make_tri)', JSON.stringify(Date.now()));
+				bt_cnt++;
 			}
 			canvas.add(tri);
 		}
@@ -138,9 +154,13 @@
 				radius: 60,
 				opacity: 0.5
 			});
-			if (sw && cir.fill == target_color){
-				make_cir();
-				return;
+			if (sw){
+				if (sw && cir.fill == target_color){
+					make_cir();
+					return;
+				}
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(make_cir)', JSON.stringify(Date.now()));
+				bt_cnt++;
 			}
 			canvas.add(cir);
 		}
@@ -153,6 +173,7 @@
 				strokeWidth: 5,
 				opacity: 0.5
 			});
+			console.log("make line");
 			canvas.add(line);
 		}
 
@@ -167,9 +188,14 @@
 				fill: colors[Math.floor(Math.random() * colors.length)],
 				opacity: 0.5
 			});
-			if (sw && poly.fill == target_color){
-				make_poly();
-				return;
+			console.log("make polygon");
+			if (sw){
+				if (sw && poly.fill == target_color){
+					make_poly();
+					return;
+				}
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(make_poly)', JSON.stringify(Date.now()));
+				bt_cnt++;
 			}
 			canvas.add(poly);
 		}
@@ -189,6 +215,10 @@
 */
 		function reset(){
 			canvas.clear();
+			if (sw){
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(reset)', JSON.stringify(Date.now()));
+				bt_cnt++;
+			}
 		}
 /*
 		function delete_object(){
@@ -197,17 +227,17 @@
 */
 		function random_top(height){
 			if (Math.floor(Math.random() * 2)){
-				return 20;
+				return 70;
 			}else{
-				return canvas.height - height - 20;
+				return canvas.height - height - 70;
 			}
 		}
 
 		function random_left(width){
 			if (Math.floor(Math.random() * 2)){
-				return 20;
+				return 70;
 			}else{
-				return canvas.width - width - 20;
+				return canvas.width - width - 70;
 			}
 		}
 
@@ -295,6 +325,7 @@
 			console.log(Date.now());
 			localStorage.setItem(test_cnt.toString() + '-' + cnt.toString(), JSON.stringify(Date.now()));
 			cnt++;
+			bt_cnt = 1;
 			document.getElementById('count').innerText = cnt.toString() + "번째";
 		}
 		
@@ -314,8 +345,33 @@
 		function set_color(button){
 			canvas.getActiveObject().set("fill", button.style.background);
 			canvas.getActiveObject().set("stroke", button.style.background);
+			if (sw){
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(change_color)', JSON.stringify(Date.now()));
+				bt_cnt++;
+			}
 			canvas.renderAll();
 		}
+
+		canvas.on('object:moved', function(options){
+			if (sw){
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(move)', JSON.stringify(Date.now()));
+				bt_cnt++;
+			}
+		})
+
+		canvas.on('object:scaled', function(options){
+			if (sw){
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(scale)', JSON.stringify(Date.now()));
+				bt_cnt++;
+			}
+		})
+
+		canvas.on('object:skewed', function(options){
+			if (sw){
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(skew)', JSON.stringify(Date.now()));
+				bt_cnt++;
+			}
+		})
 	</script>
 </body>
 </html>
