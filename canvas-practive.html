@@ -14,7 +14,6 @@
 			justify-content: center;
 			flex-direction: column;
 			background: lightgray;
-
 		}
 
 		.wrapper{
@@ -26,22 +25,23 @@
 		}
 		
 		.canvas{
-			margin-bottom: 30px;
+			margin-bottom: 70px;
 			background: white;
 		}
 
 		.buttons{
-			display:flex;
+			display: flex;
 			justify-content: center;
-			height: 55px;
+			height: 60px;
 		}
 
 		input[type=button] { 
 			margin-left: 10px;
-			margin-top: 20px;
+			margin-top: 80px;
 			font-size:16pt;
 			border: 2px solid gray;
 			border-radius: 3px;
+			height: 35px;
 		}
 	</style>
 </head>
@@ -49,45 +49,45 @@
 <body>
 	<script src=fabric.js></script>
 	<div class="page">
-	<div class="buttons">
-		<input type="button" id="rectangle" value="rectangle" onclick="make_rect();"></input>
-		<input type="button" id="triangle" value="triangle" onclick="make_tri();"></input>
-		<input type="button" id="circle" value="circle" onclick="make_cir();"></input>
-		<input type="button" id="line" value="line" onclick="make_line();"></input>
-		<input type="button" id="polygon" value="polygon" onclick="make_poly();"></input>
-		<input type="button" id="reset" value="reset" onclick="reset();" style="background: gray; color: white;"></input>
-		<input type="button" id="start" value="start" onclick="start(this);" style="background: red; color: white;"></input>
-		<input type="button" id="stop" value="stop" onclick="stop(this);" style="background: gray; color: white; visibility: hidden;"></input>
-		<h2 id="count" style="visibility: hidden; margin-left: 50px;">0번째</h2>
-	</div>
+		<div class="buttons">
+			<input type="button" id="rectangle" value="rectangle" onclick="make_rect();"></input>
+			<input type="button" id="triangle" value="triangle" onclick="make_tri();"></input>
+			<input type="button" id="circle" value="circle" onclick="make_cir();"></input>
+			<input type="button" id="line" value="line" onclick="make_line();"></input>
+			<input type="button" id="polygon" value="polygon" onclick="make_poly();"></input>
+			<input type="button" id="reset" value="reset" onclick="reset();" style="background: gray; color: white;"></input>
+			<input type="button" id="start" value="start" onclick="start(this);" style="background: red; color: white;"></input>
+			<input type="button" id="stop" value="stop" onclick="stop(this);" style="background: gray; color: white; visibility: hidden;"></input>
+			<h2 id="count" style="visibility: hidden; margin-left: 50px;">0번째</h2>
+		</div>
 
-	<div class="colors">
-		<input type="button" id="black" value="  " onclick="set_color(this);" style="background: black;"></input>
-		<input type="button" id="red" value="  " onclick="set_color(this);" style="background: red;"></input>
-		<input type="button" id="orange" value="  " onclick="set_color(this);" style="background: orange;"></input>
-		<!--
-		<input type="button" id="yellow" value="  " onclick="set_color(this);" style="background: yellow;"></input>
-		-->
-		<input type="button" id="greenyellow" value="  " onclick="set_color(this);" style="background: greenyellow;"></input>
-		<!--
-		<input type="button" id="green" value="  " onclick="set_color(this);" style="background: green;"></input>
-		-->
-		<input type="button" id="skyblue" value="  " onclick="set_color(this);" style="background: skyblue;"></input>
-		<!--
-		<input type="button" id="blue" value="  " onclick="set_color(this);" style="background: blue;"></input>
-		-->
-		<input type="button" id="navy" value="  " onclick="set_color(this);" style="background: navy;"></input>
-		<!--
-		<input type="button" id="purple" value="  " onclick="set_color(this);" style="background: purple;"></input>
-		<input type="button" id="deeppink" value="  " onclick="set_color(this);" style="background: deeppink;"></input>
-		-->
-	</div>
+		<div class="colors">
+			<input type="button" id="black" value="  " onclick="set_color(this);" style="background: black;"></input>
+			<input type="button" id="red" value="  " onclick="set_color(this);" style="background: red;"></input>
+			<input type="button" id="orange" value="  " onclick="set_color(this);" style="background: orange;"></input>
+			<!--
+			<input type="button" id="yellow" value="  " onclick="set_color(this);" style="background: yellow;"></input>
+			-->
+			<input type="button" id="greenyellow" value="  " onclick="set_color(this);" style="background: greenyellow;"></input>
+			<!--
+			<input type="button" id="green" value="  " onclick="set_color(this);" style="background: green;"></input>
+			-->
+			<input type="button" id="skyblue" value="  " onclick="set_color(this);" style="background: skyblue;"></input>
+			<!--
+			<input type="button" id="blue" value="  " onclick="set_color(this);" style="background: blue;"></input>
+			-->
+			<input type="button" id="navy" value="  " onclick="set_color(this);" style="background: navy;"></input>
+			<!--
+			<input type="button" id="purple" value="  " onclick="set_color(this);" style="background: purple;"></input>
+			<input type="button" id="deeppink" value="  " onclick="set_color(this);" style="background: deeppink;"></input>
+			-->
+		</div>
 
-	<div class="wrapper">
-	<div class="canvas">
-		<canvas id="c" width="1200" height="650" style="box-sizing: border-box; border:3px solid #8C8C8C; display:block;"></canvas>
-	</div>
-	</div>
+		<div class="wrapper">
+			<div class="canvas">
+				<canvas id="c" width="1300" height="680" style="box-sizing: border-box; border:3px solid #8C8C8C; display:block;"></canvas>
+			</div>
+		</div>
 	</div>
 
 	<script>
