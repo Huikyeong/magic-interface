@@ -326,6 +326,8 @@
 			localStorage.setItem(test_cnt.toString() + '-' + cnt.toString(), JSON.stringify(Date.now()));
 			cnt++;
 			bt_cnt = 1;
+			shift_sw = 0;
+			shift_cnt = 1;
 			document.getElementById('count').innerText = cnt.toString() + "번째";
 		}
 		
@@ -337,9 +339,13 @@
 			document.getElementById('count').style.visibility = 'hidden';
 			document.getElementById('count').innerText = '0';
 			cnt = 0;
+			bt_cnt = 1;
 			test_cnt++;
-			reset();
 			sw = 0;
+
+			shift_sw = 0;
+			shift_cnt = 1;
+			reset();
 		}
 
 		function set_color(button){
@@ -372,6 +378,36 @@
 				bt_cnt++;
 			}
 		})
+
+		canvas.on('selection:created', function(options){
+			if (sw){
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '-' + bt_cnt.toString() + '(select)', JSON.stringify(Date.now()));
+				bt_cnt++;
+			}
+		})
+
+		var shift_sw = 0;
+		var shift_cnt = 1;
+		document.addEventListener("keydown", KeyDown);
+
+		function KeyDown(e) {
+			if (e.keyCode === 16 && shift_sw == 0) {
+				shift_sw = 1;
+				console.log("shift key is pressed.");
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '(shift_down)' + '-' + shift_cnt.toString(), JSON.stringify(Date.now()));
+			}
+		}
+
+		document.addEventListener("keyup", KeyUp);
+
+		function KeyUp(e) {
+			if (e.keyCode === 16) {
+				shift_sw = 0;
+				console.log("shift key is upped.");
+				localStorage.setItem(test_cnt.toString() + '-' + cnt.toString() + '(shift_up)' + '-' + shift_cnt.toString(), JSON.stringify(Date.now()));
+				shift_cnt++;
+			}
+		}
 	</script>
 </body>
 </html>
